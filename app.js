@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
+const { errorStatusNotFound } = require('./utilits/error');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -26,6 +27,9 @@ app.use((req, res, next) => {
 
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
+app.use('*', (req, res) => {
+  res.status(errorStatusNotFound).send({ message: 'Был запрошен несуществующий роутер' });
+});
 
 app.listen(PORT, () => {
   console.log(`Порт: ${PORT}`);
