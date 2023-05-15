@@ -12,14 +12,14 @@ module.exports.getUserId = (req, res) => {
   User.findById(userId)
     .then((user) => {
       if (user === null) {
-        res.status(404).send('Пользователь по указанному _id не найден.');
+        res.status(404).send({ message: 'Пользователь по указанному _id не найден.' });
       } else {
         res.send(user);
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(400).send('Передан некорректный формат _id.');
+        res.status(400).send({ message: 'Передан некорректный формат _id.' });
       } else {
         res.status(500).send(`Ошибка по умолчанию. ${err.message}`);
       }
@@ -33,7 +33,7 @@ module.exports.createUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(400).send('Переданы некорректные данные при создании пользователя.');
+        res.status(400).send({ message: 'Переданы некорректные данные при создании карточки' });
       } else {
         res.status(500).send(`Ошибка по умолчанию. ${err.message}`);
       }
@@ -52,14 +52,14 @@ module.exports.changeProfile = (req, res) => {
   )
     .then((user) => {
       if (user === null) {
-        res.status(404).send('Пользователь по указанному _id не найден.');
+        res.status(404).send({ message: 'Пользователь по указанному _id не найден.' });
       } else {
         res.send(user);
       }
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        res.status(400).send('Переданы некорректные данные при обновлении пользователя.');
+        res.status(400).send({ message: 'Переданы некорректные данные при обновлении пользователя.' });
       } else {
         res.status(500).send(`Ошибка по умолчанию. ${err.message}`);
       }
@@ -79,14 +79,14 @@ module.exports.changeAvatar = (req, res) => {
   )
     .then((user) => {
       if (user === null) {
-        res.status(404).send('Пользователь по указанному _id не найден.');
+        res.status(404).send({ message: 'Пользователь по указанному _id не найден.' });
       } else {
         res.send(user);
       }
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
-        res.status(400).send('Переданы некорректные данные при обновлении пользователя.');
+        res.status(400).send({ message: 'Переданы некорректные данные при обновлении пользователя.' });
       } else {
         res.status(500).send(`Ошибка по умолчанию. ${err.message}`);
       }
