@@ -2,6 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
@@ -9,6 +10,7 @@ const { errorStatusNotFound } = require('./utilits/error');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+app.use(helmet());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
   .then(() => console.log('Подключилось к БД'))

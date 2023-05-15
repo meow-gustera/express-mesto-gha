@@ -8,7 +8,7 @@ const {
 module.exports.getUsers = (req, res) => {
   User.find({})
     .then((users) => res.send(users))
-    .catch((err) => res.status(errorStatusServerError).send(`Ошибка по умолчанию. ${err.message}`));
+    .catch(() => res.status(errorStatusServerError).send('Ошибка сервера'));
 };
 
 module.exports.getUserId = (req, res) => {
@@ -26,7 +26,7 @@ module.exports.getUserId = (req, res) => {
       if (err.name === 'CastError') {
         res.status(errorStatusBadRequest).send({ message: 'Передан некорректный формат _id.' });
       } else {
-        res.status(errorStatusServerError).send(`Ошибка по умолчанию. ${err.message}`);
+        res.status(errorStatusServerError).send('Ошибка сервера');
       }
     });
 };
@@ -40,7 +40,7 @@ module.exports.createUser = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(errorStatusBadRequest).send({ message: 'Переданы некорректные данные при создании карточки' });
       } else {
-        res.status(errorStatusServerError).send(`Ошибка по умолчанию. ${err.message}`);
+        res.status(errorStatusServerError).send('Ошибка сервера');
       }
     });
 };
@@ -66,7 +66,7 @@ module.exports.changeProfile = (req, res) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         res.status(errorStatusBadRequest).send({ message: 'Переданы некорректные данные при обновлении пользователя.' });
       } else {
-        res.status(errorStatusServerError).send(`Ошибка по умолчанию. ${err.message}`);
+        res.status(errorStatusServerError).send('Ошибка сервера');
       }
     });
 };
@@ -93,7 +93,7 @@ module.exports.changeAvatar = (req, res) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         res.status(errorStatusBadRequest).send({ message: 'Переданы некорректные данные при обновлении пользователя.' });
       } else {
-        res.status(errorStatusServerError).send(`Ошибка по умолчанию. ${err.message}`);
+        res.status(errorStatusServerError).send('Ошибка сервера');
       }
     });
 };
