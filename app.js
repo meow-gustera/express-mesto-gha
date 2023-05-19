@@ -1,12 +1,22 @@
 // app.js включает основную логику сервера, запуск и подключение к базе данных
+// const { celebrate, Joi } = require('celebrate');
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
+
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/users');
+const { login, createUser } = require('./controllers/users');
 const cardRoutes = require('./routes/cards');
-const { errorStatusNotFound } = require('./utilits/error');
+const auth = require('./middlewares/auth');
+const ErrorStatusNotFound = require('./utilits/errorStatusNotFound');
+const handleError = require('./middlewares/handleError');
+const userValidation = require('./middlewares/validation');
+
+// const validator = require('validator');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -18,20 +28,20 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-// решение авторизации из задания
-app.use((req, res, next) => {
-  req.user = {
-    _id: '645fa04e1d71adb13f4b6abe',
-  };
-  next();
-});
+app.post('/signin', login);
+app.post('/signup', userValidation, createUser);
+app.use(auth);
 
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
-app.use('*', (req, res) => {
-  res.status(errorStatusNotFound).send({ message: 'Был запрошен несуществующий роутер' });
+
+app.use(errors());
+app.use('*', () => {
+  throw new ErrorStatusNotFound('Страница не найдена');
 });
+app.use(handleError);
 
 app.listen(PORT, () => {
   console.log(`Порт: ${PORT}`);
