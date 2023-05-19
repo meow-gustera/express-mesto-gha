@@ -18,7 +18,6 @@ const userValidation = require('./middlewares/validation');
 const { PORT = 3000 } = process.env;
 const app = express();
 app.use(helmet());
-app.use(errors());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
   .then(() => console.log('Подключилось к БД'))
@@ -38,6 +37,8 @@ app.use('/cards', cardRoutes);
 app.use('*', () => {
   throw new ErrorStatusNotFound('Страница не найдена');
 });
+app.use(errors());
+
 app.use(handleError);
 
 app.listen(PORT, () => {
