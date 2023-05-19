@@ -13,7 +13,7 @@ const cardRoutes = require('./routes/cards');
 const auth = require('./middlewares/auth');
 const ErrorStatusNotFound = require('./utilits/errorStatusNotFound');
 const handleError = require('./middlewares/handleError');
-const userValidation = require('./middlewares/validation');
+const { userValidation } = require('./middlewares/userValidation');
 
 const { PORT = 3000 } = process.env;
 const app = express();

@@ -8,4 +8,10 @@ const cardValidation = celebrate({
   }),
 });
 
-module.exports = cardValidation;
+const idValidation = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().length(24),
+  }),
+});
+
+module.exports = { cardValidation, idValidation };
