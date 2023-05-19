@@ -5,8 +5,6 @@ const ErrorStatusBadRequest = require('../utilits/errorStatusBadRequest');
 const ErrorStatusNotFound = require('../utilits/errorStatusNotFound');
 const ErrorStatusConflict = require('../utilits/errorStatusConflict');
 
-const { userValidation } = require('../middlewares/validation');
-
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
@@ -67,7 +65,12 @@ module.exports.createUser = (req, res, next) => {
       email: req.body.email,
       password: hash,
     }))
-    .then((user) => res.send(user))
+    .then((user) => res.send({
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email,
+    }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new ErrorStatusBadRequest('Переданы некорректные данные при создании юзера.'));

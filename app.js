@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.post('/signin', login);
+app.post('/signin', userValidation, login);
 app.post('/signup', userValidation, createUser);
 app.use(auth);
 
