@@ -24,4 +24,15 @@ const userValidationAvatar = celebrate({
   }),
 });
 
-module.exports = { userValidation, userValidationProfile, userValidationAvatar };
+const userIdValidation = celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().required().length(24),
+  }),
+});
+
+module.exports = {
+  userValidation,
+  userValidationProfile,
+  userValidationAvatar,
+  userIdValidation,
+};
