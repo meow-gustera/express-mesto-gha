@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const { celebrate, Joi } = require('celebrate');
 
 const userValidation = celebrate({
@@ -22,6 +23,5 @@ const userValidationAvatar = celebrate({
     avatar: Joi.string().required().min(2).regex(/^((http|https):\/\/)(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9\-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/m),
   }),
 });
-
 
 module.exports = { userValidation, userValidationProfile, userValidationAvatar };
