@@ -90,7 +90,7 @@ module.exports.changeProfile = (req, res, next) => {
     { name, about },
     {
       new: true,
-      runValidators: true,
+      // runValidators: true,
     },
   )
     .then((user) => {

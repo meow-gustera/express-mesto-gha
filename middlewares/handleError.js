@@ -1,6 +1,5 @@
 const handleError = (err, req, res, next) => {
   // eslint-disable-next-line semi
-  console.log(err)
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
   next();

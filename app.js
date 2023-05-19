@@ -1,5 +1,4 @@
 // app.js включает основную логику сервера, запуск и подключение к базе данных
-// const { celebrate, Joi } = require('celebrate');
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -16,11 +15,10 @@ const ErrorStatusNotFound = require('./utilits/errorStatusNotFound');
 const handleError = require('./middlewares/handleError');
 const userValidation = require('./middlewares/validation');
 
-// const validator = require('validator');
-
 const { PORT = 3000 } = process.env;
 const app = express();
 app.use(helmet());
+app.use(errors());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
   .then(() => console.log('Подключилось к БД'))
@@ -37,7 +35,6 @@ app.use(auth);
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
 
-app.use(errors());
 app.use('*', () => {
   throw new ErrorStatusNotFound('Страница не найдена');
 });
