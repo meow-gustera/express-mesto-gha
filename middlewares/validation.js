@@ -22,7 +22,6 @@ const cardValidation = celebrate({
   }),
 });
 
-module.exports = {
-  userValidation,
-  cardValidation,
-};
+module.exports = userValidation;
+module.exports = cardValidation;
+
