@@ -1,7 +1,7 @@
 const Card = require('../models/card');
 const ErrorStatusBadRequest = require('../utilits/errorStatusBadRequest');
 const ErrorStatusNotFound = require('../utilits/errorStatusNotFound');
-const ErrorStatusUnauthorized = require('../utilits/errorStatusUnauthorized');
+const ErrorStatusForbidden = require('../utilits/errorStatusForbidden');
 
 // post
 module.exports.createCard = (req, res, next) => {
@@ -36,7 +36,7 @@ module.exports.deleteCard = (req, res, next) => {
         Card.findByIdAndRemove(cardId)
           .then(() => res.send({ message: `Удалена карточка: ${card}` }));
       } else {
-        throw new ErrorStatusUnauthorized('Удалить карточку может только её владелец.');
+        throw new ErrorStatusForbidden('Удалить карточку может только её владелец.');
       }
     })
     .catch((err) => {

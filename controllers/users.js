@@ -14,6 +14,7 @@ module.exports.login = (req, res, next) => {
       res.cookie('jwt', token, {
         httpOnly: true,
       })
+        .send({ message: 'Вы авторизовались' })
         .end();
     })
     .catch(next);
