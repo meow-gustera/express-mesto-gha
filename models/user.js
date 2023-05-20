@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 const mongoose = require('mongoose');
+const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const ErrorStatusUnauthorized = require('../utilits/errorStatusUnauthorized');
 
@@ -18,13 +19,20 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    minlength: 2,
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+    validate: {
+      validator: (avatar) => validator.isURL(avatar, { protocols: ['http', 'https', 'ftp'] }),
+      message: 'Ссылка некорректная',
+    },
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: (email) => validator.isEmai(email),
+      message: 'Email некорректный',
+    },
   },
   password: {
     select: false,

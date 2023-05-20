@@ -34,8 +34,8 @@ app.use(auth);
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
 
-app.use('*', () => {
-  throw new ErrorStatusNotFound('Страница не найдена');
+app.use('*', (req, res, next) => {
+  next(new ErrorStatusNotFound('Страница не найдена'));
 });
 app.use(errors());
 

@@ -48,13 +48,7 @@ module.exports.getUserId = (req, res, next) => {
         res.send(user);
       }
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new ErrorStatusBadRequest('Передан некорректный формат _id.'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
 
 module.exports.createUser = (req, res, next) => {
@@ -96,13 +90,7 @@ module.exports.changeProfile = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new ErrorStatusNotFound('Переданы некорректные данные при обновлении пользователя.'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
 
 module.exports.changeAvatar = (req, res, next) => {
@@ -118,11 +106,5 @@ module.exports.changeAvatar = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
-        next(new ErrorStatusNotFound('Переданы некорректные данные при обновлении пользователя.'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
